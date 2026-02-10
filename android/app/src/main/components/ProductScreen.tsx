@@ -64,18 +64,6 @@ export default function ProductScreen() {
   const isInCart = (id: number) =>
     cartItems.some((item: CartItem) => item.id === id);
 
-  // const addItem = (item: any) => {
-  //   dispatch(
-  //     addToCart({
-  //       id: Date.now(),
-  //       name: item.name,
-  //       price: item.price,
-  //     }),
-  //   );
-
-  //   ToastAndroid.show(`${item.name} added to cart`, ToastAndroid.SHORT);
-  // };
-
   const renderItem = ({ item }: { item: (typeof PRODUCTS)[number] }) => (
     <View style={styles.card}>
       <Image source={{ uri: item.image }} style={styles.image} />
