@@ -1,4 +1,4 @@
-import { ADD_TO_CART } from './constant';
+import { ADD_TO_CART, REMOVE_FROM_CART } from './constant';
 
 export interface CartItem {
   id: number;
@@ -11,9 +11,19 @@ export interface AddToCartAction {
   data: CartItem;
 }
 
-export const addToCart = (item: CartItem): AddToCartAction => {
-  return {
-    type: ADD_TO_CART,
-    data: item,
-  };
-};
+export interface RemoveFromCartAction {
+  type: typeof REMOVE_FROM_CART;
+  id: number;
+}
+
+export type CartAction = AddToCartAction | RemoveFromCartAction;
+
+export const addToCart = (item: CartItem): AddToCartAction => ({
+  type: ADD_TO_CART,
+  data: item,
+});
+
+export const removeFromCart = (id: number): RemoveFromCartAction => ({
+  type: REMOVE_FROM_CART,
+  id,
+});

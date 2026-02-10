@@ -6,7 +6,12 @@ import {
   FlatList,
   Image,
   Pressable,
+  Alert,
+  ToastAndroid,
 } from 'react-native';
+import { useAppDispatch } from '../../redux/hooks';
+import { addToCart, CartItem, removeFromCart } from '../../redux/action';
+import { useSelector } from 'react-redux';
 
 export const PRODUCTS = [
   {
@@ -53,6 +58,24 @@ export const PRODUCTS = [
 ] as const;
 
 export default function ProductScreen() {
+  const dispatch = useAppDispatch();
+  const cartItems = useSelector((state: any) => state.cart);
+
+  const isInCart = (id: number) =>
+    cartItems.some((item: CartItem) => item.id === id);
+
+  // const addItem = (item: any) => {
+  //   dispatch(
+  //     addToCart({
+  //       id: Date.now(),
+  //       name: item.name,
+  //       price: item.price,
+  //     }),
+  //   );
+
+  //   ToastAndroid.show(`${item.name} added to cart`, ToastAndroid.SHORT);
+  // };
+
   const renderItem = ({ item }: { item: (typeof PRODUCTS)[number] }) => (
     <View style={styles.card}>
       <Image source={{ uri: item.image }} style={styles.image} />
@@ -67,12 +90,15 @@ export default function ProductScreen() {
 
           <Pressable
             style={styles.addButton}
-            onPress={() => {
-              // add to cart logic here
-              console.log('Added to cart:', item.name);
-            }}
+            onPress={() =>
+              isInCart(item.id)
+                ? dispatch(removeFromCart(item.id))
+                : dispatch(addToCart(item))
+            }
           >
-            <Text style={styles.addButtonText}>Add to Cart</Text>
+            <Text style={styles.addButtonText}>
+              {isInCart(item.id) ? 'Remove from Cart' : 'Add to Cart'}
+            </Text>
           </Pressable>
         </View>
       </View>
