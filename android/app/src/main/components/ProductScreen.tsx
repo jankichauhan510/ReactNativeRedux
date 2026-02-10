@@ -19,7 +19,7 @@ export const PRODUCTS = [
     name: 'Wireless Bluetooth Headphones',
     price: 2999,
     category: 'Electronics',
-    image: 'file:///android_asset/images/headphones.jpg',
+    image: require('../../assets/images/headphones.jpg'),
     description:
       'Noise-cancelling headphones with deep bass and 30-hour battery life',
   },
@@ -28,7 +28,7 @@ export const PRODUCTS = [
     name: 'Smart Fitness Watch',
     price: 4999,
     category: 'Wearables',
-    image: 'file:///android_asset/images/smartwatch.jpg',
+    image: require('../../assets/images/smartwatch.jpg'),
     description: 'Tracks heart rate, steps, sleep, and phone notifications',
   },
   {
@@ -36,7 +36,7 @@ export const PRODUCTS = [
     name: 'Laptop Backpack',
     price: 1499,
     category: 'Accessories',
-    image: 'file:///android_asset/images/backpack.jpg',
+    image: require('../../assets/images/backpack.jpg'),
     description: 'Water-resistant backpack with padded laptop compartment',
   },
   {
@@ -44,7 +44,7 @@ export const PRODUCTS = [
     name: 'Wireless Charging Pad',
     price: 999,
     category: 'Mobile Accessories',
-    image: 'file:///android_asset/images/charger.jpg',
+    image: require('../../assets/images/charger.jpg'),
     description: 'Fast wireless charging pad for Android and iOS devices',
   },
   {
@@ -52,7 +52,7 @@ export const PRODUCTS = [
     name: 'Smart LED Bulb',
     price: 799,
     category: 'Smart Home',
-    image: 'file:///android_asset/images/bulb.jpg',
+    image: require('../../assets/images/bulb.jpg'),
     description: 'App-controlled RGB bulb with voice assistant support',
   },
 ] as const;
@@ -66,7 +66,7 @@ export default function ProductScreen() {
 
   const renderItem = ({ item }: { item: (typeof PRODUCTS)[number] }) => (
     <View style={styles.card}>
-      <Image source={{ uri: item.image }} style={styles.image} />
+      <Image source={item.image} style={styles.image} />
 
       <View style={styles.info}>
         <Text style={styles.name}>{item.name}</Text>
