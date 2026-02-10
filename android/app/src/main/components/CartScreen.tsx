@@ -14,12 +14,15 @@ const CartPopup = () => {
   const [visible, setVisible] = useState(false);
   const cartItems = useAppSelector(state => state.cart);
   const dispatch = useAppDispatch();
+
   const totalAmount = cartItems.reduce((sum, item) => sum + item.price, 0);
 
   return (
     <>
       {/* 🛒 HEADER */}
       <View style={styles.header}>
+        <Text style={styles.headerTitle}>Redux Cart Demo</Text>
+
         <Pressable
           style={styles.cartContainer}
           onPress={() => setVisible(true)}
@@ -41,18 +44,19 @@ const CartPopup = () => {
         animationType="fade"
         onRequestClose={() => setVisible(false)}
       >
-        {/* background */}
         <Pressable style={styles.overlay} onPress={() => setVisible(false)} />
 
         <View style={styles.popup}>
-          <Text style={styles.title}>Your Cart</Text>
+          <Text style={styles.popupTitle}>Your Cart</Text>
+          <View style={styles.divider} />
 
           {cartItems.length === 0 ? (
-            <Text style={styles.empty}>🛒 Cart is empty</Text>
+            <Text style={styles.empty}>Your cart is empty 🛒</Text>
           ) : (
             <FlatList
               data={cartItems}
               keyExtractor={item => item.id.toString()}
+              showsVerticalScrollIndicator={false}
               renderItem={({ item }) => (
                 <View style={styles.itemRow}>
                   <View>
@@ -68,7 +72,6 @@ const CartPopup = () => {
             />
           )}
 
-          {/* TOTAL */}
           {cartItems.length > 0 && (
             <View style={styles.totalRow}>
               <Text style={styles.totalText}>Total</Text>
@@ -90,13 +93,20 @@ export default CartPopup;
 const styles = StyleSheet.create({
   header: {
     height: 56,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
+    backgroundColor: '#ffffff',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#e5e7eb',
   },
+  headerTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#111827',
+  },
+
   cartContainer: {
     position: 'relative',
   },
@@ -117,8 +127,61 @@ const styles = StyleSheet.create({
   badgeText: {
     color: '#fff',
     fontSize: 11,
-    fontWeight: 'bold',
+    fontWeight: '700',
   },
+
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.35)',
+  },
+  popup: {
+    position: 'absolute',
+    top: 70,
+    right: 16,
+    width: 300,
+    maxHeight: 360,
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    padding: 14,
+    elevation: 12,
+  },
+  popupTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    textAlign: 'center',
+    color: '#111827',
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#e5e7eb',
+    marginVertical: 10,
+  },
+  empty: {
+    textAlign: 'center',
+    marginVertical: 30,
+    color: '#9ca3af',
+    fontSize: 14,
+  },
+  itemRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 8,
+  },
+  name: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#111827',
+  },
+  price: {
+    fontSize: 13,
+    color: '#6b7280',
+  },
+  remove: {
+    color: '#ef4444',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+
   totalRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -138,51 +201,8 @@ const styles = StyleSheet.create({
     color: '#16a34a',
   },
 
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.3)',
-  },
-  popup: {
-    position: 'absolute',
-    top: 70,
-    right: 16,
-    width: 280,
-    maxHeight: 350,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 12,
-    elevation: 10,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: '700',
-    marginBottom: 8,
-  },
-  empty: {
-    textAlign: 'center',
-    marginVertical: 20,
-    color: '#9ca3af',
-  },
-  itemRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 8,
-  },
-  name: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  price: {
-    fontSize: 13,
-    color: '#6b7280',
-  },
-  remove: {
-    color: '#ef4444',
-    fontSize: 13,
-    fontWeight: '600',
-  },
   closeBtn: {
-    marginTop: 10,
+    marginTop: 12,
     alignSelf: 'flex-end',
   },
   closeText: {
