@@ -12,7 +12,9 @@
   "dependencies": {
     "@react-native/new-app-screen": "0.83.1",
     "@reduxjs/toolkit": "^2.11.2",
+    "i18next": "^25.8.4",
     "react": "19.2.0",
+    "react-i18next": "^16.5.4",
     "react-native": "0.83.1",
     "react-native-safe-area-context": "^5.5.2",
     "react-native-vector-icons": "^10.3.0",
