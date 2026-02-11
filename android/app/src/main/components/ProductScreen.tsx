@@ -12,54 +12,55 @@ import {
 import { useAppDispatch } from '../../redux/hooks';
 import { addToCart, CartItem, removeFromCart } from '../../redux/action';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 export const PRODUCTS = [
   {
     id: 1,
-    name: 'Wireless Bluetooth Headphones',
+    nameKey: 'product_1_name',
     price: 2999,
-    category: 'Electronics',
+    categoryKey: 'product_1_category',
     image: require('../../assets/images/headphones.jpg'),
-    description:
-      'Noise-cancelling headphones with deep bass and 30-hour battery life',
+    descKey: 'product_1_desc',
   },
   {
     id: 2,
-    name: 'Smart Fitness Watch',
+    nameKey: 'product_2_name',
     price: 4999,
-    category: 'Wearables',
+    categoryKey: 'product_2_category',
     image: require('../../assets/images/smartwatch.jpg'),
-    description: 'Tracks heart rate, steps, sleep, and phone notifications',
+    descKey: 'product_2_desc',
   },
   {
     id: 3,
-    name: 'Laptop Backpack',
+    nameKey: 'product_3_name',
     price: 1499,
-    category: 'Accessories',
+    categoryKey: 'product_3_category',
     image: require('../../assets/images/backpack.jpg'),
-    description: 'Water-resistant backpack with padded laptop compartment',
+    descKey: 'product_3_desc',
   },
   {
     id: 4,
-    name: 'Wireless Charging Pad',
+    nameKey: 'product_4_name',
     price: 999,
-    category: 'Mobile Accessories',
+    categoryKey: 'product_4_category',
     image: require('../../assets/images/charger.jpg'),
-    description: 'Fast wireless charging pad for Android and iOS devices',
+    descKey: 'product_4_desc',
   },
   {
     id: 5,
-    name: 'Smart LED Bulb',
+    nameKey: 'product_5_name',
     price: 799,
-    category: 'Smart Home',
+    categoryKey: 'product_5_category',
     image: require('../../assets/images/bulb.jpg'),
-    description: 'App-controlled RGB bulb with voice assistant support',
+    descKey: 'product_5_desc',
   },
 ] as const;
 
 export default function ProductScreen() {
   const dispatch = useAppDispatch();
   const cartItems = useSelector((state: any) => state.cart);
+  const { t } = useTranslation();
 
   const isInCart = (id: number) =>
     cartItems.some((item: CartItem) => item.id === id);
@@ -69,9 +70,9 @@ export default function ProductScreen() {
       <Image source={item.image} style={styles.image} />
 
       <View style={styles.info}>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.category}>{item.category}</Text>
-        <Text style={styles.description}>{item.description}</Text>
+        <Text style={styles.name}>{t(item.nameKey)}</Text>
+        <Text style={styles.category}>{t(item.categoryKey)}</Text>
+        <Text style={styles.description}>{t(item.descKey)}</Text>
 
         <View style={styles.bottomRow}>
           <Text style={styles.price}>₹{item.price}</Text>
@@ -81,11 +82,17 @@ export default function ProductScreen() {
             onPress={() =>
               isInCart(item.id)
                 ? dispatch(removeFromCart(item.id))
-                : dispatch(addToCart(item))
+                : dispatch(
+                    addToCart({
+                      id: item.id,
+                      name: t(item.nameKey),
+                      price: item.price,
+                    }),
+                  )
             }
           >
             <Text style={styles.addButtonText}>
-              {isInCart(item.id) ? 'Remove from Cart' : 'Add to Cart'}
+              {isInCart(item.id) ? t('remove_from_cart') : t('add_to_cart')}
             </Text>
           </Pressable>
         </View>

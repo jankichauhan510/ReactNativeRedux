@@ -9,11 +9,22 @@ import {
 } from 'react-native';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import { removeFromCart } from '../../redux/action';
+import { useTranslation } from 'react-i18next';
 
 const CartPopup = () => {
   const [visible, setVisible] = useState(false);
   const cartItems = useAppSelector(state => state.cart);
   const dispatch = useAppDispatch();
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lang: string) => {
+    i18n.changeLanguage(lang);
+  };
+
+  const languages = [
+    { code: 'en', label: 'EN' },
+    { code: 'hi', label: 'हिं' },
+    { code: 'gu', label: 'ગુ' },
+  ];
 
   const totalAmount = cartItems.reduce((sum, item) => sum + item.price, 0);
 
@@ -21,7 +32,7 @@ const CartPopup = () => {
     <>
       {/* 🛒 HEADER */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Redux Cart Demo</Text>
+        <Text style={styles.headerTitle}>{t('header_title')}</Text>
 
         <Pressable
           style={styles.cartContainer}
@@ -35,6 +46,28 @@ const CartPopup = () => {
             </View>
           )}
         </Pressable>
+
+        <View style={styles.langContainer}>
+          {languages.map(lang => (
+            <Pressable
+              key={lang.code}
+              onPress={() => changeLanguage(lang.code)}
+              style={[
+                styles.langButton,
+                i18n.language === lang.code && styles.activeLangButton,
+              ]}
+            >
+              <Text
+                style={[
+                  styles.langText,
+                  i18n.language === lang.code && styles.activeLangText,
+                ]}
+              >
+                {lang.label}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
       </View>
 
       {/* 🧾 CART POPUP */}
@@ -47,11 +80,11 @@ const CartPopup = () => {
         <Pressable style={styles.overlay} onPress={() => setVisible(false)} />
 
         <View style={styles.popup}>
-          <Text style={styles.popupTitle}>Your Cart</Text>
+          <Text style={styles.popupTitle}>{t('cart_title')}</Text>
           <View style={styles.divider} />
 
           {cartItems.length === 0 ? (
-            <Text style={styles.empty}>Your cart is empty 🛒</Text>
+            <Text style={styles.empty}>{t('cart_empty')}</Text>
           ) : (
             <FlatList
               data={cartItems}
@@ -65,7 +98,7 @@ const CartPopup = () => {
                   </View>
 
                   <Pressable onPress={() => dispatch(removeFromCart(item.id))}>
-                    <Text style={styles.remove}>Remove</Text>
+                    <Text style={styles.remove}>{t('remove')}</Text>
                   </Pressable>
                 </View>
               )}
@@ -74,13 +107,13 @@ const CartPopup = () => {
 
           {cartItems.length > 0 && (
             <View style={styles.totalRow}>
-              <Text style={styles.totalText}>Total</Text>
+              <Text style={styles.totalText}>{t('total')}</Text>
               <Text style={styles.totalPrice}>₹{totalAmount}</Text>
             </View>
           )}
 
           <Pressable style={styles.closeBtn} onPress={() => setVisible(false)}>
-            <Text style={styles.closeText}>Close</Text>
+            <Text style={styles.closeText}>{t('close')}</Text>
           </Pressable>
         </View>
       </Modal>
@@ -208,5 +241,31 @@ const styles = StyleSheet.create({
   closeText: {
     color: '#2563eb',
     fontWeight: '600',
+  },
+  langContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#f1f5f9',
+    borderRadius: 20,
+    padding: 4,
+  },
+
+  langButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    borderRadius: 16,
+  },
+
+  activeLangButton: {
+    backgroundColor: '#2563eb',
+  },
+
+  langText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#475569',
+  },
+
+  activeLangText: {
+    color: '#ffffff',
   },
 });

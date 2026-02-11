@@ -1,5 +1,30 @@
 {
-  "hello": "Hello",
-  "this line is translated": "This line is translated",
-  "janki": "Janki"
+  "cart_title": "Your Cart",
+  "cart_empty": "Your cart is empty 🛒",
+  "remove": "Remove",
+  "total": "Total",
+  "close": "Close",
+  "header_title": "Redux Cart Demo",
+  "add_to_cart": "Add to Cart",
+  "remove_from_cart": "Remove from Cart",
+
+  "product_1_name": "Wireless Bluetooth Headphones",
+  "product_1_category": "Electronics",
+  "product_1_desc": "Noise-cancelling headphones with deep bass and 30-hour battery life",
+
+  "product_2_name": "Smart Fitness Watch",
+  "product_2_category": "Wearables",
+  "product_2_desc": "Tracks heart rate, steps, sleep, and phone notifications",
+
+  "product_3_name": "Laptop Backpack",
+  "product_3_category": "Accessories",
+  "product_3_desc": "Water-resistant backpack with padded laptop compartment",
+
+  "product_4_name": "Wireless Charging Pad",
+  "product_4_category": "Mobile Accessories",
+  "product_4_desc": "Fast wireless charging pad for Android and iOS devices",
+
+  "product_5_name": "Smart LED Bulb",
+  "product_5_category": "Smart Home",
+  "product_5_desc": "App-controlled RGB bulb with voice assistant support"
 }
